@@ -7,4 +7,7 @@
 
     <string name="menu_addSportscouting">Add</string>
     <string name="menu_cancelSportScouting">Cancel</string>
+
+    <string name="hint_search_players">Search players</string>
+
 </resources>

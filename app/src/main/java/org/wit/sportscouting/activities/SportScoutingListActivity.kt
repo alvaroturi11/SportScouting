@@ -16,11 +16,13 @@ import org.wit.sportscouting.databinding.ActivitySportscoutingListBinding
 import org.wit.sportscouting.databinding.CardSportscoutingBinding
 import org.wit.sportscouting.main.MainApp
 import org.wit.sportscouting.models.SportScoutingModel
+import androidx.appcompat.widget.SearchView
 
 class SportScoutingListActivity : AppCompatActivity() {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivitySportscoutingListBinding
+    private lateinit var adapter: SportScoutingAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +33,21 @@ class SportScoutingListActivity : AppCompatActivity() {
 
         app = application as MainApp
 
-        val layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = SportScoutingAdapter(app.sportscoutings)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = SportScoutingAdapter(app.sportscoutings)
+        binding.recyclerView.adapter = adapter
+
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                applyFilter(query.orEmpty())
+                return true
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                applyFilter(newText.orEmpty())
+                return true
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -51,6 +65,16 @@ class SportScoutingListActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun applyFilter(text: String) {
+        val q = text.trim().lowercase()
+        val base = app.sportscoutings //list of new players I add
+        val filtered = if (q.isEmpty()) base
+        else base.filter {
+            it.title.lowercase().contains(q) || it.description.lowercase().contains(q)
+        }
+        adapter.updateData(filtered)
+    }
+
     private val getResult =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -60,10 +84,15 @@ class SportScoutingListActivity : AppCompatActivity() {
                 notifyItemRangeChanged(0,app.sportscoutings.size)
             }
         }
-}
+    }
 
 class SportScoutingAdapter(private var sportscoutings: List<SportScoutingModel>) :
     RecyclerView.Adapter<SportScoutingAdapter.MainHolder>() {
+
+    fun updateData(newItems: List<SportScoutingModel>) {
+        sportscoutings = newItems
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         val binding = CardSportscoutingBinding
@@ -75,6 +104,7 @@ class SportScoutingAdapter(private var sportscoutings: List<SportScoutingModel>)
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val sportscouting = sportscoutings[holder.adapterPosition]
         holder.bind(sportscouting)
+        //holder.bind(sportscoutings[position])
     }
 
     override fun getItemCount(): Int = sportscoutings.size
