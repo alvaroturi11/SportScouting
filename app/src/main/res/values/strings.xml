@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">SportScouting</string>
+
+    <string name="hint_sportscoutingTitle">Title</string>
+    <string name="hint_sportscoutingDescription">Description</string>
+    <string name="button_addSportscouting">Add SportScouting</string>
+
+    <string name="menu_addSportscouting">Add</string>
+    <string name="menu_cancelSportScouting">Cancel</string>
 </resources>

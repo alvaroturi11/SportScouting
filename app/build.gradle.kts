@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -30,12 +31,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    /*kotlinOptions {
-        jvmTarget = "11"
-    }*/
-    kotlin {
-        jvmToolchain(17)
+    kotlinOptions {
+        jvmTarget = "17"
     }
+    /*kotlin {
+        jvmToolchain(17)
+    }*/
 
     buildFeatures {
         viewBinding = true

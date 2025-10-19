@@ -33,7 +33,7 @@ class SportScoutingListActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = SportScoutingAdapter(app.sportscoutingss)
+        binding.recyclerView.adapter = SportScoutingAdapter(app.sportscoutings)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -62,8 +62,8 @@ class SportScoutingListActivity : AppCompatActivity() {
         }
 }
 
-class SportScoutingAdapterAdapter(private var sportscoutings: List<SportScoutingModel>) :
-    RecyclerView.Adapter<SportScoutingAdapterAdapter.MainHolder>() {
+class SportScoutingAdapter(private var sportscoutings: List<SportScoutingModel>) :
+    RecyclerView.Adapter<SportScoutingAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
         val binding = CardSportscoutingBinding
