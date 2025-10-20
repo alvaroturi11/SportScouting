@@ -74,10 +74,29 @@ class SportScoutingListActivity : AppCompatActivity() {
                 val launcherIntent = Intent(this, SportScoutingActivity::class.java)
                 getResult.launch(launcherIntent)
             }
+            R.id.item_delete_all -> {
+                showDeleteAllDialog()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
 
+    private fun showDeleteAllDialog() {
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle(getString(R.string.dialog_delete_title))
+            .setMessage(getString(R.string.dialog_delete_message))
+            .setNegativeButton(getString(R.string.action_cancel), null)
+            .setPositiveButton(getString(R.string.action_delete)) { _, _ ->
+                // Clear the list of players
+                app.sportscoutings.clear()
+
+                // Clear the search bar
+                binding.searchView.setQuery("", false)
+                
+                applyFilter("")
+            }
+            .show()
+    }
     private fun showFilterDialog() {
         // Position tags
         val labels = arrayOf(

@@ -19,6 +19,12 @@
     <string name="pos_midfielder">Midfielder</string>
     <string name="pos_forward">Forward</string>
 
+    <string name="menu_delete_all">Delete all</string>
+    <string name="dialog_delete_title">Are you sure?</string>
+    <string name="dialog_delete_message">Do you really want to delete all players?</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_delete">Delete</string>
+
     <string name="menu_addSportscouting">Add</string>
     <string name="menu_cancelSportScouting">Cancel</string>
 
