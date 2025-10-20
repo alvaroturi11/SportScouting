@@ -17,12 +17,16 @@ import org.wit.sportscouting.databinding.CardSportscoutingBinding
 import org.wit.sportscouting.main.MainApp
 import org.wit.sportscouting.models.SportScoutingModel
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.app.AlertDialog
 
 class SportScoutingListActivity : AppCompatActivity() {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivitySportscoutingListBinding
     private lateinit var adapter: SportScoutingAdapter
+
+    private val selected = booleanArrayOf(false, false, false, false)
+    private val positions = arrayOf("goalkeeper", "defender", "midfielder", "forward")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +52,9 @@ class SportScoutingListActivity : AppCompatActivity() {
                 return true
             }
         })
+
+        //Filter button
+        binding.btnFilter.setOnClickListener { showFilterDialog() }
     }
 
     override fun onResume() {
@@ -71,9 +78,60 @@ class SportScoutingListActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun showFilterDialog() {
+        // Position tags
+        val labels = arrayOf(
+            getString(R.string.pos_goalkeeper),
+            getString(R.string.pos_defender),
+            getString(R.string.pos_midfielder),
+            getString(R.string.pos_forward)
+        )
+
+        // Filters state
+        val oldState = selected.copyOf()
+
+        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle(getString(R.string.filter_by_position))
+            .setMultiChoiceItems(labels, selected) { _, j, isChecked ->
+                // Mantén el estado en memoria
+                selected[j] = isChecked
+            }
+            // Apply the filter
+            .setPositiveButton(getString(R.string.filters_apply)) { dialog, _ ->
+                applyFilter(binding.searchView.query?.toString().orEmpty())
+                dialog.dismiss()
+            }
+            // Clear
+            .setNeutralButton(getString(R.string.filters_clear), null)
+            // Cancel
+            .setNegativeButton(getString(R.string.filters_cancel)) { _, _ ->
+                for (i in selected.indices) {
+                    selected[i] = oldState[i]
+                }
+            }
+
+        val dialog = builder.create()
+
+        dialog.setOnShowListener {
+            // "Clear" do not close the dialolg
+            val clearBtn = dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_NEUTRAL)
+            clearBtn.setOnClickListener {
+                // 1) Limpia estado
+                selected.fill(false)
+                // 2) Uncheck the boxes of the filter dialog
+                val lv = dialog.listView
+                for (i in 0 until lv.count) lv.setItemChecked(i, false)
+            }
+        }
+
+        dialog.show()
+    }
+
     private fun applyFilter(text: String) {
         val q = text.trim().lowercase()
         val base = app.sportscoutings //list of new players I add
+
+        //Search by name
         val filtered = if (q.isEmpty()){
             base
         }
@@ -82,7 +140,17 @@ class SportScoutingListActivity : AppCompatActivity() {
                 it.title.lowercase().contains(q)
             }
         }
-        adapter.updateData(filtered)
+
+        //Filter by positions
+        val selectedPositions = positions
+            .mapIndexedNotNull { i, key -> if (selected[i]) key else null }
+            .toSet()
+
+        val finalFiltered =
+            if (selectedPositions.isEmpty()) filtered
+            else filtered.filter { it.position.lowercase() in selectedPositions }
+
+        adapter.updateData(finalFiltered)
     }
 
     private val getResult =

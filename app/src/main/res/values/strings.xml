@@ -6,8 +6,18 @@
     <string name="hint_position">Position</string>
     <string name="button_addSportscouting">Add SportScouting</string>
 
-    <string name="button_edit_player">Edit player</string>string>
+    <string name="button_edit_player">Edit player</string>
     <string name="cd_edit_player">Edit this player</string>
+
+    <string name="cd_filter">Filter</string>
+    <string name="filter_by_position">Filter by position</string>
+    <string name="filters_apply">Apply</string>
+    <string name="filters_clear">Clear</string>
+    <string name="filters_cancel">Cancel</string>
+    <string name="pos_goalkeeper">Goalkeeper</string>
+    <string name="pos_defender">Defender</string>
+    <string name="pos_midfielder">Midfielder</string>
+    <string name="pos_forward">Forward</string>
 
     <string name="menu_addSportscouting">Add</string>
     <string name="menu_cancelSportScouting">Cancel</string>
