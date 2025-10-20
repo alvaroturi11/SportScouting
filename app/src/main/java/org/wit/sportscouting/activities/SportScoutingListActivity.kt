@@ -50,6 +50,12 @@ class SportScoutingListActivity : AppCompatActivity() {
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        val q = binding.searchView.query?.toString().orEmpty()
+        applyFilter(q)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return super.onCreateOptionsMenu(menu)
@@ -68,9 +74,13 @@ class SportScoutingListActivity : AppCompatActivity() {
     private fun applyFilter(text: String) {
         val q = text.trim().lowercase()
         val base = app.sportscoutings //list of new players I add
-        val filtered = if (q.isEmpty()) base
-        else base.filter {
-            it.title.lowercase().contains(q) || it.description.lowercase().contains(q)
+        val filtered = if (q.isEmpty()){
+            base
+        }
+        else{
+            base.filter {
+                it.title.lowercase().contains(q)
+            }
         }
         adapter.updateData(filtered)
     }
@@ -109,12 +119,25 @@ class SportScoutingAdapter(private var sportscoutings: List<SportScoutingModel>)
 
     override fun getItemCount(): Int = sportscoutings.size
 
+
     class MainHolder(private val binding : CardSportscoutingBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(sportscouting: SportScoutingModel) {
             binding.sportscoutingTitle.text = sportscouting.title
-            binding.description.text = sportscouting.description
+            //binding.description.text = sportscouting.description
+            val team = sportscouting.description.trim()
+            val pos = sportscouting.position.trim()
+            binding.description.text =
+                if (pos.isNotEmpty()) "$team • $pos" else team
+
+            //Edit a player
+            binding.btnEdit.setOnClickListener {
+                val ctx = it.context
+                val intent = Intent(ctx, SportScoutingActivity::class.java)
+                intent.putExtra("editIndex", bindingAdapterPosition)
+                ctx.startActivity(intent)
+            }
         }
     }
 }

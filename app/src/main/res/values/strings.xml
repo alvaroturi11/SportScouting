@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">SportScouting</string>
 
-    <string name="hint_sportscoutingTitle">Title</string>
-    <string name="hint_sportscoutingDescription">Description</string>
+    <string name="hint_player">Player</string>
+    <string name="hint_team">Team</string>
+    <string name="hint_position">Position</string>
     <string name="button_addSportscouting">Add SportScouting</string>
+
+    <string name="button_edit_player">Edit player</string>string>
+    <string name="cd_edit_player">Edit this player</string>
 
     <string name="menu_addSportscouting">Add</string>
     <string name="menu_cancelSportScouting">Cancel</string>

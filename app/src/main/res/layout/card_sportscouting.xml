@@ -27,5 +27,19 @@
             android:layout_below="@id/sportscoutingTitle"
             tools:text="A Description" />
 
+        <ImageButton
+            android:id="@+id/btnEdit"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:padding="4dp"
+            android:src="@android:drawable/ic_menu_edit"
+            android:contentDescription="@string/cd_edit_player" />
+
+
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
