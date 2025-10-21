@@ -85,18 +85,42 @@
                     android:textSize="14sp"
                     tools:ignore="VisualLintTextFieldSize" />
 
-                <Button
-                    android:id="@+id/btnAdd"
+                <LinearLayout
+                    android:id="@+id/actionsRow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
-                    android:background="@color/colorAccent"
-                    android:padding="8dp"
-                    android:stateListAnimator="@null"
-                    android:text="@string/button_addSportscouting"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"
-                    tools:ignore="VisualLintButtonSize" />
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnAdd"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorAccent"
+                        android:padding="8dp"
+                        android:stateListAnimator="@null"
+                        android:text="@string/button_addSportscouting"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp"
+                        tools:ignore="VisualLintButtonSize" />
+
+                    <Space
+                        android:layout_width="8dp"
+                        android:layout_height="wrap_content" />
+
+                    <Button
+                        android:id="@+id/btnDelete"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:text="@string/button_delete_player"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
+                </LinearLayout>
+
             </LinearLayout>
         </ScrollView>
 

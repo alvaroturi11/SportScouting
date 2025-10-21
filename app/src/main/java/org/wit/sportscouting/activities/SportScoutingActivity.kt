@@ -8,6 +8,8 @@ import org.wit.sportscouting.main.MainApp
 import org.wit.sportscouting.models.SportScoutingModel
 import timber.log.Timber.i
 import org.wit.sportscouting.R
+import android.view.View
+import androidx.appcompat.app.AlertDialog
 
 class SportScoutingActivity: AppCompatActivity() {
 
@@ -35,6 +37,9 @@ class SportScoutingActivity: AppCompatActivity() {
             binding.description.setText(item.description)
             binding.position.setText(item.position)
             binding.btnAdd.text = getString(R.string.button_edit_player)
+
+            binding.btnDelete.visibility = View.VISIBLE
+            binding.btnDelete.setOnClickListener { showDeleteOneDialog() }
         }
 
         binding.btnAdd.setOnClickListener() {
@@ -62,5 +67,19 @@ class SportScoutingActivity: AppCompatActivity() {
                     .show()
             }
         }
+    }
+
+    private fun showDeleteOneDialog() {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.dialog_delete_one_title))
+            .setNegativeButton(getString(R.string.action_cancel), null) // vuelve a edición
+            .setPositiveButton(getString(R.string.action_delete)) { _, _ ->
+                if (editIndex in app.sportscoutings.indices) {
+                    app.sportscoutings.removeAt(editIndex) // Delete player
+                }
+                setResult(RESULT_OK)
+                finish() // return to the initial list
+            }
+            .show()
     }
 }
