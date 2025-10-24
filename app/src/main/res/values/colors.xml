@@ -6,4 +6,15 @@
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#212121</color>
     <color name="colorAccent">#6200EE</color>
+
+    <color name="searchYellow">#FFD54F</color>
+    <color name="purplePill">#6C3DDB</color>
+    <color name="dashboardCream">#FFF6E5</color>
+
+    <color name="cardForward">#E53935</color>   <!-- red -->
+    <color name="cardMidfielder">#00897B</color><!-- teal -->
+    <color name="cardDefender">#2E7D32</color>  <!-- green -->
+    <color name="cardGoalkeeper">#F57C00</color><!-- orange -->
+    <color name="cardDefault">#26A69A</color>   <!-- backup -->
+
 </resources>

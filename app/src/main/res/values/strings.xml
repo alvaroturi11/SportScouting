@@ -28,6 +28,9 @@
     <string name="button_delete_player">Delete player</string>
     <string name="dialog_delete_one_title">Are you sure you want to delete the player?</string>
 
+    <string name="dashboard_title">Team Dashboard</string>
+    <string name="dash_watched">Watched</string>
+
     <string name="menu_addSportscouting">Add</string>
     <string name="menu_cancelSportScouting">Cancel</string>
 

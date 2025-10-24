@@ -18,6 +18,8 @@ import org.wit.sportscouting.main.MainApp
 import org.wit.sportscouting.models.SportScoutingModel
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+
 
 class SportScoutingListActivity : AppCompatActivity() {
 
@@ -32,8 +34,8 @@ class SportScoutingListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySportscoutingListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.toolbar.title = title
-        setSupportActionBar(binding.toolbar)
+        //binding.toolbar.title = title
+        //setSupportActionBar(binding.toolbar)
 
         app = application as MainApp
 
@@ -41,7 +43,18 @@ class SportScoutingListActivity : AppCompatActivity() {
         adapter = SportScoutingAdapter(app.sportscoutings)
         binding.recyclerView.adapter = adapter
 
+        // Trash button
+        binding.btnHeaderDelete.setOnClickListener {
+            showDeleteAllDialog()
+        }
 
+        // Add button
+        binding.btnHeaderAdd.setOnClickListener {
+            val launcherIntent = Intent(this, SportScoutingActivity::class.java)
+            getResult.launch(launcherIntent)
+        }
+
+        //Search by name
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 applyFilter(query.orEmpty())
@@ -55,6 +68,8 @@ class SportScoutingListActivity : AppCompatActivity() {
 
         //Filter button
         binding.btnFilter.setOnClickListener { showFilterDialog() }
+
+        updateDashboard(app.sportscoutings)
     }
 
     override fun onResume() {
@@ -82,17 +97,13 @@ class SportScoutingListActivity : AppCompatActivity() {
     }
 
     private fun showDeleteAllDialog() {
-        androidx.appcompat.app.AlertDialog.Builder(this)
+        AlertDialog.Builder(this)
             .setTitle(getString(R.string.dialog_delete_title))
             .setMessage(getString(R.string.dialog_delete_message))
             .setNegativeButton(getString(R.string.action_cancel), null)
             .setPositiveButton(getString(R.string.action_delete)) { _, _ ->
-                // Clear the list of players
                 app.sportscoutings.clear()
-
-                // Clear the search bar
                 binding.searchView.setQuery("", false)
-                
                 applyFilter("")
             }
             .show()
@@ -135,7 +146,7 @@ class SportScoutingListActivity : AppCompatActivity() {
             // "Clear" do not close the dialolg
             val clearBtn = dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_NEUTRAL)
             clearBtn.setOnClickListener {
-                // 1) Limpia estado
+                // 1) Clean state
                 selected.fill(false)
                 // 2) Uncheck the boxes of the filter dialog
                 val lv = dialog.listView
@@ -169,7 +180,22 @@ class SportScoutingListActivity : AppCompatActivity() {
             if (selectedPositions.isEmpty()) filtered
             else filtered.filter { it.position.lowercase() in selectedPositions }
 
+        updateDashboard(finalFiltered)
+
         adapter.updateData(finalFiltered)
+    }
+
+    private fun updateDashboard(current: List<SportScoutingModel>) {
+        val gk = current.count { it.position.equals("goalkeeper", ignoreCase = true) }
+        val df = current.count { it.position.equals("defender", ignoreCase = true) }
+        val mf = current.count { it.position.equals("midfielder", ignoreCase = true) }
+        val fw = current.count { it.position.equals("forward", ignoreCase = true) }
+
+        binding.tvCountTotal.text = current.size.toString()
+        binding.tvCountGK.text = gk.toString()
+        binding.tvCountDF.text = df.toString()
+        binding.tvCountMF.text = mf.toString()
+        binding.tvCountFW.text = fw.toString()
     }
 
     private val getResult =
@@ -217,6 +243,19 @@ class SportScoutingAdapter(private var sportscoutings: List<SportScoutingModel>)
             val pos = sportscouting.position.trim()
             binding.description.text =
                 if (pos.isNotEmpty()) "$team • $pos" else team
+
+            // Player card color
+            val ctx = binding.root.context
+            val colorRes = when (pos.lowercase()) {
+                "forward"    -> R.color.cardForward
+                "midfielder" -> R.color.cardMidfielder
+                "defender"   -> R.color.cardDefender
+                "goalkeeper" -> R.color.cardGoalkeeper
+                else         -> R.color.cardDefault
+            }
+            binding.cardRoot.setCardBackgroundColor(
+                androidx.core.content.ContextCompat.getColor(ctx, colorRes)
+            )
 
             //Edit a player
             binding.btnEdit.setOnClickListener {
