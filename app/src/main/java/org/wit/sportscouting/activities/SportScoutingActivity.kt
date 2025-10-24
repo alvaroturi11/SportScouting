@@ -58,6 +58,9 @@ class SportScoutingActivity: AppCompatActivity() {
                 for (i in app.sportscoutings.indices) {
                     i("SportScouting[$i]:${this.app.sportscoutings[i]}")
                 }
+
+                app.persist()
+
                 setResult(RESULT_OK)
                 finish()
             }
@@ -72,10 +75,11 @@ class SportScoutingActivity: AppCompatActivity() {
     private fun showDeleteOneDialog() {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.dialog_delete_one_title))
-            .setNegativeButton(getString(R.string.action_cancel), null) // vuelve a edición
+            .setNegativeButton(getString(R.string.action_cancel), null) // return to edition
             .setPositiveButton(getString(R.string.action_delete)) { _, _ ->
                 if (editIndex in app.sportscoutings.indices) {
                     app.sportscoutings.removeAt(editIndex) // Delete player
+                    app.persist()
                 }
                 setResult(RESULT_OK)
                 finish() // return to the initial list

@@ -1,0 +1,6 @@
+[
+  { "title": "Vinicius", "description": "Real Madrid", "position": "forward" },
+  { "title": "Pedri", "description": "Barcelona", "position": "midfielder" },
+  { "title": "Huijsen", "description": "Real Madrid", "position": "defender" },
+  { "title": "Oblak", "description": "Atleti", "position": "defender" }
+]

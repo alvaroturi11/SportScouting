@@ -103,6 +103,7 @@ class SportScoutingListActivity : AppCompatActivity() {
             .setNegativeButton(getString(R.string.action_cancel), null)
             .setPositiveButton(getString(R.string.action_delete)) { _, _ ->
                 app.sportscoutings.clear()
+                app.persist()
                 binding.searchView.setQuery("", false)
                 applyFilter("")
             }
@@ -123,7 +124,7 @@ class SportScoutingListActivity : AppCompatActivity() {
         val builder = androidx.appcompat.app.AlertDialog.Builder(this)
             .setTitle(getString(R.string.filter_by_position))
             .setMultiChoiceItems(labels, selected) { _, j, isChecked ->
-                // Mantén el estado en memoria
+                // The info stays in the array
                 selected[j] = isChecked
             }
             // Apply the filter
