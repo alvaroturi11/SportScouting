@@ -261,8 +261,11 @@ class SportScoutingAdapter(private var sportscoutings: List<SportScoutingModel>)
             //Edit a player
             binding.btnEdit.setOnClickListener {
                 val ctx = it.context
+                val app = ctx.applicationContext as MainApp
+                val fullIndex = app.sportscoutings.indexOf(sportscouting) // index of the full list
+
                 val intent = Intent(ctx, SportScoutingActivity::class.java)
-                intent.putExtra("editIndex", bindingAdapterPosition)
+                intent.putExtra("editIndex", fullIndex) // real index for editing
                 ctx.startActivity(intent)
             }
         }
