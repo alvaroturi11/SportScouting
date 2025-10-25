@@ -33,8 +33,8 @@ class SportScoutingActivity: AppCompatActivity() {
         editIndex = intent.getIntExtra("editIndex", -1)
         if (editIndex != -1) {
             val item = app.sportscoutings[editIndex]
-            binding.sportscoutingTitle.setText(item.title)
-            binding.description.setText(item.description)
+            binding.player.setText(item.player)
+            binding.team.setText(item.team)
             binding.position.setText(item.position)
             binding.btnAdd.text = getString(R.string.button_edit_player)
 
@@ -43,10 +43,10 @@ class SportScoutingActivity: AppCompatActivity() {
         }
 
         binding.btnAdd.setOnClickListener() {
-            sportscouting.title = binding.sportscoutingTitle.text.toString()
-            sportscouting.description = binding.description.text.toString()
+            sportscouting.player = binding.player.text.toString()
+            sportscouting.team = binding.team.text.toString()
             sportscouting.position = binding.position.text.toString()
-            if (sportscouting.title.isNotEmpty()) {
+            if (sportscouting.player.isNotEmpty()) {
                 if(editIndex == -1){ //Add player
                     app.sportscoutings.add(sportscouting.copy())
                     i("add Button Pressed: $sportscouting")

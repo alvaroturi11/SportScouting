@@ -11,8 +11,8 @@ class SportScoutingModelTest {
     fun createPlayer_isCorrect() {
         val player = SportScoutingModel("Mbappe", "Real Madrid", "forward")
 
-        assertEquals("Mbappe", player.title)
-        assertEquals("Real Madrid", player.description)
+        assertEquals("Mbappe", player.player)
+        assertEquals("Real Madrid", player.team)
         assertEquals("forward", player.position)
     }
 

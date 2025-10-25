@@ -41,7 +41,7 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/sportscoutingTitle"
+                    android:id="@+id/player"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_margin="8dp"
@@ -56,7 +56,7 @@
                     tools:ignore="VisualLintTextFieldSize" />
 
                 <EditText
-                    android:id="@+id/description"
+                    android:id="@+id/team"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_margin="8dp"

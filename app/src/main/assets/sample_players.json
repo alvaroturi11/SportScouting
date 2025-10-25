@@ -1,6 +1,6 @@
 [
-  { "title": "Vinicius", "description": "Real Madrid", "position": "forward" },
-  { "title": "Modric", "description": "Milan", "position": "midfielder" },
-  { "title": "Van Dijk", "description": "Liverpool", "position": "defender" },
-  { "title": "Oblak", "description": "Atleti", "position": "goalkeeper" }
+  { "player": "Vinicius", "team": "Real Madrid", "position": "forward" },
+  { "player": "Modric", "team": "Milan", "position": "midfielder" },
+  { "player": "Van Dijk", "team": "Liverpool", "position": "defender" },
+  { "player": "Oblak", "team": "Atleti", "position": "goalkeeper" }
 ]

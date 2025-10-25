@@ -168,7 +168,7 @@ class SportScoutingListActivity : AppCompatActivity() {
         }
         else{
             base.filter {
-                it.title.lowercase().contains(q)
+                it.player.lowercase().contains(q)
             }
         }
 
@@ -238,11 +238,11 @@ class SportScoutingAdapter(private var sportscoutings: List<SportScoutingModel>)
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(sportscouting: SportScoutingModel) {
-            binding.sportscoutingTitle.text = sportscouting.title
+            binding.player.text = sportscouting.player
             //binding.description.text = sportscouting.description
-            val team = sportscouting.description.trim()
+            val team = sportscouting.team.trim()
             val pos = sportscouting.position.trim()
-            binding.description.text =
+            binding.team.text =
                 if (pos.isNotEmpty()) "$team • $pos" else team
 
             // Player card color

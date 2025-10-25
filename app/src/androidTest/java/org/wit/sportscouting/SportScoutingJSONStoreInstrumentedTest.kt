@@ -59,7 +59,7 @@ class SportScoutingJSONStoreInstrumentedTest {
         // upload sample_players.json
         assertTrue(items.isNotEmpty())
         // The first player is "Vinicius" (like in sample_players.json)
-        assertEquals("Vinicius", items.first().title)
+        assertEquals("Vinicius", items.first().player)
     }
 
     @Test
