@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Purple header (title + yellow search + filter button) -->
+        <!-- Blue header (title + yellow search + filter button) -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/headerCard"
             android:layout_width="match_parent"
@@ -73,7 +73,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!-- yellow search + purple filter button -->
+                <!-- yellow search + blue filter button -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
                         android:layout_height="48dp"
                         android:layout_marginStart="10dp"
                         app:cardCornerRadius="16dp"
-                        app:cardBackgroundColor="@color/purplePill">
+                        app:cardBackgroundColor="@color/bluePill">
 
                         <ImageButton
                             android:id="@+id/btnFilter"
@@ -262,7 +262,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:scrollbars="vertical" />
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

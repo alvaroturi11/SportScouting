@@ -70,6 +70,11 @@ class SportScoutingActivity: AppCompatActivity() {
                     .show()
             }
         }
+
+        binding.btnCancel.setOnClickListener {
+            setResult(RESULT_CANCELED)
+            finish()
+        }
     }
 
     private fun showDeleteOneDialog() {

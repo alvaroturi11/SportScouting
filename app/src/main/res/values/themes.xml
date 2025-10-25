@@ -3,7 +3,9 @@
     <style name="Base.Theme.SportScouting" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-    </style>
+        <!-- <item name="colorPrimary">@color/colorPrimary</item>-->
+        <!--<item name="colorPrimaryContainer">@color/bluePill</item>-->
+     </style>
 
-    <style name="Theme.SportScouting" parent="Base.Theme.SportScouting" />
-</resources>
+     <style name="Theme.SportScouting" parent="Base.Theme.SportScouting" />
+ </resources>

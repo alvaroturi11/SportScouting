@@ -42,13 +42,13 @@
             app:layout_constraintTop_toBottomOf="@id/sportscoutingTitle"
             app:layout_constraintEnd_toStartOf="@+id/btnEditContainer" />
 
-        <!-- Purple container for the edit button -->
+        <!-- Blue container for the edit button -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/btnEditContainer"
             android:layout_width="40dp"
             android:layout_height="40dp"
             app:cardCornerRadius="12dp"
-            app:cardBackgroundColor="@color/purplePill"
+            app:cardBackgroundColor="@color/bluePill"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

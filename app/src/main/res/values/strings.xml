@@ -4,8 +4,8 @@
     <string name="hint_player">Player</string>
     <string name="hint_team">Team</string>
     <string name="hint_position">Position</string>
-    <string name="button_addSportscouting">Add SportScouting</string>
-
+    <string name="button_addNewPlayer">Add New Player</string>
+    <string name="button_cancel">Cancel</string>
     <string name="button_edit_player">Edit player</string>
     <string name="cd_edit_player">Edit this player</string>
 
