@@ -30,20 +30,26 @@
         </activity>
 
         <activity
-            android:name=".activities.SportScoutingListActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:name=".activities.LoginActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity
+            android:name=".activities.SportScoutingListActivity"
+            android:exported="false">
 
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
-            android:name=".activities.SportScoutingActivity">
+            android:name=".activities.SportScoutingActivity"
+            android:exported="false">
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

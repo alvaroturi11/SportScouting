@@ -9,8 +9,8 @@ import org.wit.sportscouting.R
 
 class SplashActivity : AppCompatActivity() {
 
-    // Splash duration in miliseconds (2s)
-    private val splashDuration: Long = 2000
+    // Splash duration in miliseconds (3s)
+    private val splashDuration: Long = 3000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,8 +18,8 @@ class SplashActivity : AppCompatActivity() {
 
         // After the delay, we open the main list and close the splash screen
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, SportScoutingListActivity::class.java)
-            startActivity(intent)
+            val next = Intent(this, SportScoutingListActivity::class.java)
+            startActivity(next)
             finish() // So that the splash screen cannot be returned to.
         }, splashDuration)
     }

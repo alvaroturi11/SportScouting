@@ -54,6 +54,12 @@ class SportScoutingListActivity : AppCompatActivity() {
             getResult.launch(launcherIntent)
         }
 
+        // Login button
+        binding.btnHeaderLogin.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
         //Search by name
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -92,8 +98,27 @@ class SportScoutingListActivity : AppCompatActivity() {
             R.id.item_delete_all -> {
                 showDeleteAllDialog()
             }
+            R.id.item_login -> {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            R.id.item_logout -> {
+                logoutUser()
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun logoutUser() {
+        val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
+        prefs.edit().putBoolean("logged_in", false).apply()
+
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 
     private fun showDeleteAllDialog() {

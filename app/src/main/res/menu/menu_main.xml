@@ -16,4 +16,16 @@
         app:showAsAction="always"
         android:orderInCategory="20"/>
 
+    <item
+        android:id="@+id/item_login"
+        android:title="Login / Sign up"
+        app:showAsAction="never"
+        android:orderInCategory="25"/>
+
+    <item
+        android:id="@+id/item_logout"
+        android:title="Logout"
+        app:showAsAction="never"
+        android:orderInCategory="30" />
+
 </menu>
