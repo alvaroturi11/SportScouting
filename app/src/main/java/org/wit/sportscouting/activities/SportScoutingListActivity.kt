@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.PopupMenu
+import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -60,6 +62,30 @@ class SportScoutingListActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // Profile button
+        binding.btnHeaderProfile.setOnClickListener { view ->
+            val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
+            val email = prefs.getString("user_email", "Unknown user")
+
+            val popup = PopupMenu(this, view)
+            // Línea informativa con el email (deshabilitada)
+            popup.menu.add("Logged as: $email").isEnabled = false
+            // Opción de logout
+            popup.menu.add("Logout")
+
+            popup.setOnMenuItemClickListener { item ->
+                when (item.title) {
+                    "Logout" -> {
+                        logoutUser()   // ahora solo cierra sesión y actualiza botones
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            popup.show()
+        }
+
         //Search by name
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -76,12 +102,14 @@ class SportScoutingListActivity : AppCompatActivity() {
         binding.btnFilter.setOnClickListener { showFilterDialog() }
 
         updateDashboard(app.sportscoutings)
+        updateUserButtons()
     }
 
     override fun onResume() {
         super.onResume()
         val q = binding.searchView.query?.toString().orEmpty()
         applyFilter(q)
+        updateUserButtons()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -111,14 +139,24 @@ class SportScoutingListActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun updateUserButtons() {
+        val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
+        val loggedIn = prefs.getBoolean("logged_in", false)
+
+        if (loggedIn) {
+            binding.btnHeaderLogin.visibility = View.GONE
+            binding.btnHeaderProfile.visibility = View.VISIBLE
+        } else {
+            binding.btnHeaderLogin.visibility = View.VISIBLE
+            binding.btnHeaderProfile.visibility = View.GONE
+        }
+    }
+
     private fun logoutUser() {
         val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
         prefs.edit().putBoolean("logged_in", false).apply()
 
-        val intent = Intent(this, LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        finish()
+        updateUserButtons()
     }
 
     private fun showDeleteAllDialog() {
