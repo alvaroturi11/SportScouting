@@ -46,6 +46,7 @@ class SportScoutingActivity: AppCompatActivity() {
             sportscouting.player = binding.player.text.toString()
             sportscouting.team = binding.team.text.toString()
             sportscouting.position = binding.position.text.toString()
+
             if (sportscouting.player.isNotEmpty()) {
                 if(editIndex == -1){ //Add player
                     app.sportscoutings.add(sportscouting.copy())
