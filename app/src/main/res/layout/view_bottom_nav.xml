@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottomNav"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:orientation="horizontal"
+    android:background="@color/colorAccent"
+    android:padding="8dp"
+    android:gravity="center">
+
+    <!-- MAP BUTTON -->
+    <ImageButton
+        android:id="@+id/btnBottomMap"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_map_24"
+        android:background="@android:color/transparent"
+        android:tint="@android:color/white"
+        android:contentDescription="Open Map"
+        android:layout_marginEnd="40dp"/>
+
+    <!-- HOME (MIDDLE, LARGER) -->
+    <ImageButton
+        android:id="@+id/btnBottomHome"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:src="@drawable/ic_home_24"
+        android:background="@android:color/transparent"
+        android:tint="@android:color/white"
+        android:contentDescription="Home" />
+
+    <!-- FUTURE FEATURE -->
+    <ImageButton
+        android:id="@+id/btnBottomMore"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_more_horiz_24"
+        android:background="@android:color/transparent"
+        android:tint="@android:color/white"
+        android:layout_marginStart="40dp"
+        android:contentDescription="More features" />
+
+</LinearLayout>

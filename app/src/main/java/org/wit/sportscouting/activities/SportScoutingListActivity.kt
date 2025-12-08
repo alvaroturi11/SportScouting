@@ -104,6 +104,18 @@ class SportScoutingListActivity : AppCompatActivity() {
         //Filter button
         binding.btnFilter.setOnClickListener { showFilterDialog() }
 
+        // Bottom bar - Map button
+        binding.bottomNav.btnBottomMap.setOnClickListener {
+            startActivity(Intent(this, PlayersMapActivity::class.java))
+        }
+
+        // Bottom bar - Home button
+        binding.bottomNav.btnBottomHome.setOnClickListener {
+            binding.searchView.setQuery("", false)
+            selected.fill(false)
+            applyFilter("")
+        }
+
         // Initial list + buttons according to user
         applyFilter("")
         updateDashboard(app.sportscoutings)
