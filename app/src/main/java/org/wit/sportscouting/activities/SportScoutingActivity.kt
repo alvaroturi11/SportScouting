@@ -33,6 +33,10 @@ class SportScoutingActivity: AppCompatActivity() {
         editIndex = intent.getIntExtra("editIndex", -1)
         if (editIndex != -1) {
             val item = app.sportscoutings[editIndex]
+
+            // Keep a copy so we preserve ownerEmail
+            sportscouting = item.copy()
+
             binding.player.setText(item.player)
             binding.team.setText(item.team)
             binding.position.setText(item.position)
@@ -49,6 +53,10 @@ class SportScoutingActivity: AppCompatActivity() {
 
             if (sportscouting.player.isNotEmpty()) {
                 if(editIndex == -1){ //Add player
+                    // Assign current user as owner
+                    val currentEmail = getCurrentUserEmail()
+                    sportscouting.ownerEmail = currentEmail ?: ""
+
                     app.sportscoutings.add(sportscouting.copy())
                     i("add Button Pressed: $sportscouting")
                 }
@@ -75,6 +83,16 @@ class SportScoutingActivity: AppCompatActivity() {
         binding.btnCancel.setOnClickListener {
             setResult(RESULT_CANCELED)
             finish()
+        }
+    }
+
+    private fun getCurrentUserEmail(): String? {
+        val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
+        val loggedIn = prefs.getBoolean("logged_in", false)
+        return if (loggedIn) {
+            prefs.getString("user_email", null)
+        } else {
+            null   // without logging in -> “anonymous” player
         }
     }
 

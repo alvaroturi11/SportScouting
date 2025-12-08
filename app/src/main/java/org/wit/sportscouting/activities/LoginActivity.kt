@@ -7,6 +7,7 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import org.wit.sportscouting.databinding.ActivityLoginBinding
+import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
 
@@ -30,6 +31,34 @@ class LoginActivity : AppCompatActivity() {
         binding.btnCancel.setOnClickListener { finish() }
     }
 
+    // Load all users saved in SharedPreferences as a map email -> password
+    private fun loadAllUsers(): MutableMap<String, String> {
+        val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+        val json = prefs.getString("all_users", "{}") ?: "{}"
+
+        return try {
+            val jsonObj = JSONObject(json)
+            val map = mutableMapOf<String, String>()
+            val keys = jsonObj.keys()
+            while (keys.hasNext()) {
+                val key = keys.next()
+                map[key] = jsonObj.getString(key)
+            }
+            map
+        } catch (e: Exception) {
+            mutableMapOf()
+        }
+    }
+
+    // Save the user map in SharedPreferences as JSON
+    private fun saveAllUsers(map: Map<String, String>) {
+        val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+        val jsonObj = JSONObject(map)
+        prefs.edit()
+            .putString("all_users", jsonObj.toString())
+            .apply()
+    }
+
     private fun handleSignup() {
         val email = binding.etEmail.text.toString().trim()
         val password = binding.etPassword.text.toString().trim()
@@ -39,10 +68,21 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
+        val users = loadAllUsers()
+
+        // If a user already exists with this email address, we will not allow them to register again.
+        if (users.containsKey(email)) {
+            showMessage("User already exists. Please use Login.")
+            return
+        }
+
+        // We added this new user to the map
+        users[email] = password
+        saveAllUsers(users)
+
         val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
         prefs.edit()
             .putString(KEY_EMAIL, email)
-            .putString(KEY_PASSWORD, password)
             .putBoolean(KEY_LOGGED_IN, true)
             .apply()
 
@@ -63,12 +103,15 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
-        val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-        val savedEmail = prefs.getString(KEY_EMAIL, null)
-        val savedPassword = prefs.getString(KEY_PASSWORD, null)
+        val users = loadAllUsers()
+        val savedPassword = users[email]
 
-        if (email == savedEmail && password == savedPassword) {
-            prefs.edit().putBoolean(KEY_LOGGED_IN, true).apply()
+        if (savedPassword == password) {
+            val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+            prefs.edit()
+                .putString(KEY_EMAIL, email)
+                .putBoolean(KEY_LOGGED_IN, true)
+                .apply()
 
             showMessage("Logged in successfully")
 

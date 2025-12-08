@@ -42,8 +42,11 @@ class SportScoutingListActivity : AppCompatActivity() {
         app = application as MainApp
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = SportScoutingAdapter(app.sportscoutings)
+
+        adapter = SportScoutingAdapter(emptyList())
         binding.recyclerView.adapter = adapter
+        //adapter = SportScoutingAdapter(app.sportscoutings)
+        //binding.recyclerView.adapter = adapter
 
         // Trash button
         binding.btnHeaderDelete.setOnClickListener {
@@ -101,6 +104,8 @@ class SportScoutingListActivity : AppCompatActivity() {
         //Filter button
         binding.btnFilter.setOnClickListener { showFilterDialog() }
 
+        // Initial list + buttons according to user
+        applyFilter("")
         updateDashboard(app.sportscoutings)
         updateUserButtons()
     }
@@ -139,6 +144,16 @@ class SportScoutingListActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun getCurrentUserEmail(): String? {
+        val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
+        val loggedIn = prefs.getBoolean("logged_in", false)
+        return if (loggedIn) {
+            prefs.getString("user_email", null)
+        } else {
+            null
+        }
+    }
+
     private fun updateUserButtons() {
         val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
         val loggedIn = prefs.getBoolean("logged_in", false)
@@ -157,6 +172,7 @@ class SportScoutingListActivity : AppCompatActivity() {
         prefs.edit().putBoolean("logged_in", false).apply()
 
         updateUserButtons()
+        applyFilter(binding.searchView.query?.toString().orEmpty())
     }
 
     private fun showDeleteAllDialog() {
@@ -165,8 +181,18 @@ class SportScoutingListActivity : AppCompatActivity() {
             .setMessage(getString(R.string.dialog_delete_message))
             .setNegativeButton(getString(R.string.action_cancel), null)
             .setPositiveButton(getString(R.string.action_delete)) { _, _ ->
-                app.sportscoutings.clear()
+
+                /*app.sportscoutings.clear()
                 app.persist()
+                binding.searchView.setQuery("", false)
+                applyFilter("")*/
+                // Remove only current user's players
+                val email = getCurrentUserEmail()
+                if (email != null) {
+                    app.sportscoutings.removeAll { it.ownerEmail == email }
+                    app.persist()
+                }
+
                 binding.searchView.setQuery("", false)
                 applyFilter("")
             }
@@ -223,7 +249,19 @@ class SportScoutingListActivity : AppCompatActivity() {
 
     private fun applyFilter(text: String) {
         val q = text.trim().lowercase()
-        val base = app.sportscoutings //list of new players I add
+        //val base = app.sportscoutings //list of new players I add
+        val currentEmail = getCurrentUserEmail()
+
+        // base = only actual user's players
+        val baseAll = app.sportscoutings
+        
+        val base = if (currentEmail != null) {
+            // Logged-in user: only their players
+            baseAll.filter { it.ownerEmail == currentEmail }
+        } else {
+            // No username: only anonymous players
+            baseAll.filter { it.ownerEmail.isNullOrEmpty() }
+        }
 
         //Search by name
         val filtered = if (q.isEmpty()){
@@ -267,8 +305,10 @@ class SportScoutingListActivity : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == RESULT_OK) {
-                (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.sportscoutings.size)
+                //(binding.recyclerView.adapter)?.
+                //notifyItemRangeChanged(0,app.sportscoutings.size)
+                val q = binding.searchView.query?.toString().orEmpty()
+                applyFilter(q)
             }
         }
     }
