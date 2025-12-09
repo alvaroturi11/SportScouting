@@ -6,4 +6,5 @@ import kotlinx.serialization.Serializable
 data class SportScoutingModel(var player: String = "",
                               var team: String = "",
                               var position: String = "",
-                              var ownerEmail: String = "")
+                              var ownerEmail: String = "",
+                              var image: String = "")

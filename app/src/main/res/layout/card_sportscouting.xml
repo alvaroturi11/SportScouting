@@ -18,6 +18,17 @@
         android:layout_height="wrap_content"
         android:padding="12dp">
 
+        <ImageView
+            android:id="@+id/ivPlayer"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/outline_account_circle_24"
+            android:contentDescription="@string/cd_edit_player"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
         <TextView
             android:id="@+id/player"
             android:layout_width="0dp"
@@ -26,7 +37,7 @@
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="@android:color/white"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivPlayer"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnEditContainer"
             app:layout_constraintHorizontal_bias="0" />

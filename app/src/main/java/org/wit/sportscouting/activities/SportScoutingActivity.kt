@@ -10,12 +10,19 @@ import timber.log.Timber.i
 import org.wit.sportscouting.R
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+
 
 class SportScoutingActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivitySportscoutingBinding
     var sportscouting = SportScoutingModel()
     //val sportscoutings = ArrayList<SportScoutingModel>()
+    private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
+
     lateinit var app: MainApp
 
     private var editIndex: Int = -1 //Variable to know if I'm editing a player
@@ -30,6 +37,8 @@ class SportScoutingActivity: AppCompatActivity() {
 
         i("Sport Scouting Activity started...")
 
+        registerImagePickerCallback()
+
         editIndex = intent.getIntExtra("editIndex", -1)
         if (editIndex != -1) {
             val item = app.sportscoutings[editIndex]
@@ -42,8 +51,17 @@ class SportScoutingActivity: AppCompatActivity() {
             binding.position.setText(item.position)
             binding.btnAdd.text = getString(R.string.button_edit_player)
 
+            // If there is an image -> display it
+            if (item.image.isNotBlank()) {
+                binding.imagePlayer.setImageURI(Uri.parse(item.image))
+            }
+
             binding.btnDelete.visibility = View.VISIBLE
             binding.btnDelete.setOnClickListener { showDeleteOneDialog() }
+        }
+
+        binding.btnSelectImage.setOnClickListener {
+            openImagePicker()
         }
 
         binding.btnAdd.setOnClickListener() {
@@ -84,6 +102,43 @@ class SportScoutingActivity: AppCompatActivity() {
             setResult(RESULT_CANCELED)
             finish()
         }
+    }
+
+    // File selector callback (ACTION_OPEN_DOCUMENT)
+    private fun registerImagePickerCallback() {
+        imagePickerLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
+                if (result.resultCode == RESULT_OK && result.data != null) {
+                    val uri = result.data!!.data
+                    if (uri != null) {
+
+                        // Guardamos permiso para leer la imagen en futuros arranques
+                        contentResolver.takePersistableUriPermission(
+                            uri,
+                            Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        )
+
+                        sportscouting.image = uri.toString()   // guardamos la URI
+                        binding.imagePlayer.setImageURI(uri)   // la mostramos
+
+                        i("Image selected: $uri")
+                    }
+                }
+            }
+    }
+
+    // Open file selector
+    private fun openImagePicker() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "image/*"
+            addFlags(
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                        Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
+            )
+        }
+        imagePickerLauncher.launch(intent)
     }
 
     private fun getCurrentUserEmail(): String? {

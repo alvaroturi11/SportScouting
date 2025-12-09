@@ -21,6 +21,7 @@ import org.wit.sportscouting.models.SportScoutingModel
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import android.net.Uri
 
 
 class SportScoutingListActivity : AppCompatActivity() {
@@ -359,6 +360,13 @@ class SportScoutingAdapter(private var sportscoutings: List<SportScoutingModel>)
             val pos = sportscouting.position.trim()
             binding.team.text =
                 if (pos.isNotEmpty()) "$team • $pos" else team
+
+            // Player image
+            if (sportscouting.image.isNotBlank()) {
+                binding.ivPlayer.setImageURI(Uri.parse(sportscouting.image))
+            } else {
+                binding.ivPlayer.setImageResource(R.drawable.outline_account_circle_24)
+            }
 
             // Player card color
             val ctx = binding.root.context

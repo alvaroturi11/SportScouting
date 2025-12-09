@@ -27,7 +27,7 @@ class PlayersMapActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // (Opcional) botón more
+        // Bottom bar - Team button
         binding.bottomNav.btnBottomMore.setOnClickListener {
             // future feature
         }
