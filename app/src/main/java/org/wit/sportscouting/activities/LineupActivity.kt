@@ -292,6 +292,10 @@ class LineupActivity : AppCompatActivity() {
         binding.bottomNav.btnBottomMap.setOnClickListener {
             val intent = Intent(this, PlayersMapActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left
+            )
         }
 
         // Bottom bar - Home button
@@ -299,6 +303,10 @@ class LineupActivity : AppCompatActivity() {
             val intent = Intent(this, SportScoutingListActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
+            overridePendingTransition(
+                R.anim.slide_in_left,
+                R.anim.slide_out_right
+            )
         }
 
         // Bottom bar - Team button

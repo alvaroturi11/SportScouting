@@ -3,6 +3,7 @@ package org.wit.sportscouting.activities
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import org.wit.sportscouting.R
 import org.wit.sportscouting.databinding.ActivityPlayersMapBinding
 
 class PlayersMapActivity : AppCompatActivity() {
@@ -25,11 +26,19 @@ class PlayersMapActivity : AppCompatActivity() {
             val intent = Intent(this, SportScoutingListActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
+            overridePendingTransition(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left
+            )
         }
 
         // Bottom bar - Lineup button
         binding.bottomNav.btnBottomMore.setOnClickListener {
             startActivity(Intent(this, LineupActivity::class.java))
+            overridePendingTransition(
+                R.anim.slide_in_left,
+                R.anim.slide_out_right
+            )
         }
     }
 }

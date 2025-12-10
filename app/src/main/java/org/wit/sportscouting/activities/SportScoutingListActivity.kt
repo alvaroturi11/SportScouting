@@ -64,6 +64,10 @@ class SportScoutingListActivity : AppCompatActivity() {
         binding.btnHeaderLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(
+                R.anim.slide_in_top,
+                0
+            )
         }
 
         // Profile button
@@ -108,6 +112,10 @@ class SportScoutingListActivity : AppCompatActivity() {
         // Bottom bar - Map button
         binding.bottomNav.btnBottomMap.setOnClickListener {
             startActivity(Intent(this, PlayersMapActivity::class.java))
+            overridePendingTransition(
+                R.anim.slide_in_left,
+                R.anim.slide_out_right
+            )
         }
 
         // Bottom bar - Home button
@@ -120,6 +128,10 @@ class SportScoutingListActivity : AppCompatActivity() {
         // Bottom bar - Lineup button
         binding.bottomNav.btnBottomMore.setOnClickListener {
             startActivity(Intent(this, LineupActivity::class.java))
+            overridePendingTransition(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left
+            )
         }
 
         // Initial list + buttons according to user

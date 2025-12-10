@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import org.wit.sportscouting.databinding.ActivityLoginBinding
 import org.json.JSONObject
+import org.wit.sportscouting.R
 
 class LoginActivity : AppCompatActivity() {
 
@@ -28,7 +29,13 @@ class LoginActivity : AppCompatActivity() {
 
         binding.btnLogin.setOnClickListener { handleLogin() }
         binding.btnSignup.setOnClickListener { handleSignup() }
-        binding.btnCancel.setOnClickListener { finish() }
+        binding.btnCancel.setOnClickListener {
+            finish()
+            overridePendingTransition(
+                0,
+                R.anim.slide_out_top
+            )
+        }
     }
 
     // Load all users saved in SharedPreferences as a map email -> password
@@ -130,6 +137,10 @@ class LoginActivity : AppCompatActivity() {
     private fun goToList() {
         val intent = Intent(this, SportScoutingListActivity::class.java)
         startActivity(intent)
+        overridePendingTransition(
+            0,
+            R.anim.slide_out_top
+        )
         finish()
     }
 }
