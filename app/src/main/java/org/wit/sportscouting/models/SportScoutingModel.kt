@@ -7,4 +7,6 @@ data class SportScoutingModel(var player: String = "",
                               var team: String = "",
                               var position: String = "",
                               var ownerEmail: String = "",
-                              var image: String = "")
+                              var image: String = "",
+                              var inLineup: Boolean = false,
+                              var lineupPosition: String = "")

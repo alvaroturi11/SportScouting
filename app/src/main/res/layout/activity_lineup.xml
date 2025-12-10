@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- field + positions -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:layout_gravity="top"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/pitchContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal|center_vertical">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lineup_title"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:id="@+id/tvHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lineup_hint"
+                android:textSize="18sp"
+                android:paddingBottom="16dp" />
+
+            <!-- Goalkeeper -->
+            <TextView
+                android:id="@+id/posGK"
+                style="@style/LineupGap"
+                android:text="GK" />
+
+            <!-- Defenders (4) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="32dp">
+
+                <TextView
+                    android:id="@+id/posDF1"
+                    style="@style/LineupGap"
+                    android:text="DF" />
+
+                <TextView
+                    android:id="@+id/posDF2"
+                    style="@style/LineupGap"
+                    android:text="DF" />
+
+                <TextView
+                    android:id="@+id/posDF3"
+                    style="@style/LineupGap"
+                    android:text="DF" />
+
+                <TextView
+                    android:id="@+id/posDF4"
+                    style="@style/LineupGap"
+                    android:text="DF" />
+            </LinearLayout>
+
+            <!-- Midfielders (3) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="32dp">
+
+                <TextView
+                    android:id="@+id/posMF1"
+                    style="@style/LineupGap"
+                    android:text="MF" />
+
+                <TextView
+                    android:id="@+id/posMF2"
+                    style="@style/LineupGap"
+                    android:text="MF" />
+
+                <TextView
+                    android:id="@+id/posMF3"
+                    style="@style/LineupGap"
+                    android:text="MF" />
+            </LinearLayout>
+
+            <!-- Forward (3) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp">
+
+                <TextView
+                    android:id="@+id/posFW1"
+                    style="@style/LineupGap"
+                    android:text="FW" />
+
+                <TextView
+                    android:id="@+id/posFW2"
+                    style="@style/LineupGap"
+                    android:text="FW" />
+
+                <TextView
+                    android:id="@+id/posFW3"
+                    style="@style/LineupGap"
+                    android:text="FW" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom bar -->
+    <include
+        android:id="@+id/bottomNav"
+        layout="@layout/view_bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" />
+
+</FrameLayout>

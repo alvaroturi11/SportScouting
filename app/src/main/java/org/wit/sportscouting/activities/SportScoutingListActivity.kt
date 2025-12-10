@@ -117,6 +117,11 @@ class SportScoutingListActivity : AppCompatActivity() {
             applyFilter("")
         }
 
+        // Bottom bar - Lineup button
+        binding.bottomNav.btnBottomMore.setOnClickListener {
+            startActivity(Intent(this, LineupActivity::class.java))
+        }
+
         // Initial list + buttons according to user
         applyFilter("")
         updateDashboard(app.sportscoutings)

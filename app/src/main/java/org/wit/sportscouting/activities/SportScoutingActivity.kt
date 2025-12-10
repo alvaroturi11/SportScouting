@@ -113,14 +113,14 @@ class SportScoutingActivity: AppCompatActivity() {
                     val uri = result.data!!.data
                     if (uri != null) {
 
-                        // Guardamos permiso para leer la imagen en futuros arranques
+                        // Save permission to read the image on future startups.
                         contentResolver.takePersistableUriPermission(
                             uri,
                             Intent.FLAG_GRANT_READ_URI_PERMISSION
                         )
 
-                        sportscouting.image = uri.toString()   // guardamos la URI
-                        binding.imagePlayer.setImageURI(uri)   // la mostramos
+                        sportscouting.image = uri.toString()   // save the URI
+                        binding.imagePlayer.setImageURI(uri)   // display
 
                         i("Image selected: $uri")
                     }

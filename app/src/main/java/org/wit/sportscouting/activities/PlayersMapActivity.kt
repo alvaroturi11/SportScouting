@@ -20,16 +20,16 @@ class PlayersMapActivity : AppCompatActivity() {
             // no-op
         }
 
-        // Bottom bar - Home button → volver a la lista principal
+        // Bottom bar - Home button
         binding.bottomNav.btnBottomHome.setOnClickListener {
             val intent = Intent(this, SportScoutingListActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
         }
 
-        // Bottom bar - Team button
+        // Bottom bar - Lineup button
         binding.bottomNav.btnBottomMore.setOnClickListener {
-            // future feature
+            startActivity(Intent(this, LineupActivity::class.java))
         }
     }
 }

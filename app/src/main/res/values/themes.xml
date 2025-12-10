@@ -8,4 +8,15 @@
      </style>
 
      <style name="Theme.SportScouting" parent="Base.Theme.SportScouting" />
+
+    <style name="LineupGap">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_margin">6dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/lineup_gap_bg</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
  </resources>

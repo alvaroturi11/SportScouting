@@ -36,4 +36,14 @@
 
     <string name="hint_search_players">Search players</string>
 
+    <string name="lineup_title">Lineup</string>
+    <string name="lineup_hint">Tap a position to assign a player</string>
+    <string name="lineup_no_players_title">No players available</string>
+    <string name="lineup_no_players_detail">Add some players first from the main screen.</string>
+    <string name="lineup_choose_player">Choose a player</string>
+    <string name="lineup_gap_options">What do you want to do?</string>
+    <string name="lineup_change_player">Change player</string>
+    <string name="lineup_remove_player">Remove player</string>
+
+
 </resources>
