@@ -22,6 +22,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import android.net.Uri
+import androidx.appcompat.app.AppCompatDelegate
 
 
 class SportScoutingListActivity : AppCompatActivity() {
@@ -33,7 +34,15 @@ class SportScoutingListActivity : AppCompatActivity() {
     private val selected = booleanArrayOf(false, false, false, false)
     private val positions = arrayOf("goalkeeper", "defender", "midfielder", "forward")
 
+    // Constants for Night Mode
+    companion object {
+        private const val PREFS_UI = "ui_prefs"
+        private const val KEY_DARK_PREFIX = "dark_mode"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        applySavedThemeForCurrentUser()
+
         super.onCreate(savedInstanceState)
         binding = ActivitySportscoutingListBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -73,18 +82,26 @@ class SportScoutingListActivity : AppCompatActivity() {
         // Profile button
         binding.btnHeaderProfile.setOnClickListener { view ->
             val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
-            val email = prefs.getString("user_email", "Unknown user")
+            val email = prefs.getString("user_email", null) ?: "anonymous"
 
             val popup = PopupMenu(this, view)
-            // Línea informativa con el email (deshabilitada)
+
             popup.menu.add("Logged as: $email").isEnabled = false
-            // Opción de logout
+            // Toggle Dark Mode option
+            val isDark = isDarkModeForUser(email)
+            val darkTitle = if (isDark) "Dark mode: ON" else "Dark mode: OFF"
+            popup.menu.add(darkTitle)
+            // Logout option
             popup.menu.add("Logout")
 
             popup.setOnMenuItemClickListener { item ->
                 when (item.title) {
                     "Logout" -> {
-                        logoutUser()   // ahora solo cierra sesión y actualiza botones
+                        logoutUser()
+                        true
+                    }
+                    "Dark mode: ON", "Dark mode: OFF" -> {
+                        toggleDarkModeForUser(email)
                         true
                     }
                     else -> false
@@ -142,6 +159,7 @@ class SportScoutingListActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        applySavedThemeForCurrentUser()
         val q = binding.searchView.query?.toString().orEmpty()
         applyFilter(q)
         updateUserButtons()
@@ -172,6 +190,43 @@ class SportScoutingListActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun getThemeUserKey(): String {
+        val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
+        val loggedIn = prefs.getBoolean("logged_in", false)
+        val email = if (loggedIn) prefs.getString("user_email", null) else null
+        return email ?: "anonymous"
+    }
+
+    private fun applySavedThemeForCurrentUser() {
+        val userKey = getThemeUserKey()
+        val prefs = getSharedPreferences(PREFS_UI, MODE_PRIVATE)
+        val darkMode = prefs.getBoolean(KEY_DARK_PREFIX + userKey, false)
+
+        AppCompatDelegate.setDefaultNightMode(
+            if (darkMode) AppCompatDelegate.MODE_NIGHT_YES
+            else AppCompatDelegate.MODE_NIGHT_NO
+        )
+    }
+
+    private fun isDarkModeForUser(email: String): Boolean {
+        val prefs = getSharedPreferences(PREFS_UI, MODE_PRIVATE)
+        return prefs.getBoolean(KEY_DARK_PREFIX + email, false)
+    }
+
+    private fun toggleDarkModeForUser(email: String) {
+        val prefs = getSharedPreferences(PREFS_UI, MODE_PRIVATE)
+        val current = prefs.getBoolean(KEY_DARK_PREFIX + email, false)
+        val newValue = !current
+        prefs.edit().putBoolean(KEY_DARK_PREFIX + email, newValue).apply()
+
+        AppCompatDelegate.setDefaultNightMode(
+            if (newValue) AppCompatDelegate.MODE_NIGHT_YES
+            else AppCompatDelegate.MODE_NIGHT_NO
+        )
+
+        recreate()
     }
 
     private fun getCurrentUserEmail(): String? {

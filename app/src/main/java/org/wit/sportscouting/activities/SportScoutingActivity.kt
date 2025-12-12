@@ -14,6 +14,8 @@ import android.content.Intent
 import android.net.Uri
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import android.content.res.Configuration
+import android.graphics.Color
 
 
 class SportScoutingActivity: AppCompatActivity() {
@@ -57,6 +59,17 @@ class SportScoutingActivity: AppCompatActivity() {
             }
 
             binding.btnDelete.visibility = View.VISIBLE
+
+            binding.btnDelete.isEnabled = true
+            // In dark mode, set text to white.
+            val isDark =
+                (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) ==
+                        Configuration.UI_MODE_NIGHT_YES
+            if (isDark) {
+                binding.btnDelete.setTextColor(Color.WHITE)
+                binding.btnSelectImage.setTextColor(Color.WHITE)
+            }
+
             binding.btnDelete.setOnClickListener { showDeleteOneDialog() }
         }
 

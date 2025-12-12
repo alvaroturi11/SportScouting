@@ -45,5 +45,6 @@
     <string name="lineup_change_player">Change player</string>
     <string name="lineup_remove_player">Remove player</string>
 
+    <string name="menu_toggle_theme">Toggle dark mode</string>
 
 </resources>
