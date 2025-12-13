@@ -1,6 +1,5 @@
 package org.wit.sportscouting.activities
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,7 +19,6 @@ import org.wit.sportscouting.main.MainApp
 import org.wit.sportscouting.models.SportScoutingModel
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import android.net.Uri
 import androidx.appcompat.app.AppCompatDelegate
 
@@ -46,8 +44,6 @@ class SportScoutingListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySportscoutingListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //binding.toolbar.title = title
-        //setSupportActionBar(binding.toolbar)
 
         app = application as MainApp
 
@@ -55,8 +51,6 @@ class SportScoutingListActivity : AppCompatActivity() {
 
         adapter = SportScoutingAdapter(emptyList())
         binding.recyclerView.adapter = adapter
-        //adapter = SportScoutingAdapter(app.sportscoutings)
-        //binding.recyclerView.adapter = adapter
 
         // Trash button
         binding.btnHeaderDelete.setOnClickListener {
@@ -267,10 +261,6 @@ class SportScoutingListActivity : AppCompatActivity() {
             .setNegativeButton(getString(R.string.action_cancel), null)
             .setPositiveButton(getString(R.string.action_delete)) { _, _ ->
 
-                /*app.sportscoutings.clear()
-                app.persist()
-                binding.searchView.setQuery("", false)
-                applyFilter("")*/
                 // Remove only current user's players
                 val email = getCurrentUserEmail()
                 if (email != null) {
@@ -334,12 +324,11 @@ class SportScoutingListActivity : AppCompatActivity() {
 
     private fun applyFilter(text: String) {
         val q = text.trim().lowercase()
-        //val base = app.sportscoutings //list of new players I add
         val currentEmail = getCurrentUserEmail()
 
         // base = only actual user's players
         val baseAll = app.sportscoutings
-        
+
         val base = if (currentEmail != null) {
             // Logged-in user: only their players
             baseAll.filter { it.ownerEmail == currentEmail }
@@ -390,13 +379,11 @@ class SportScoutingListActivity : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult()
         ) {
             if (it.resultCode == RESULT_OK) {
-                //(binding.recyclerView.adapter)?.
-                //notifyItemRangeChanged(0,app.sportscoutings.size)
                 val q = binding.searchView.query?.toString().orEmpty()
                 applyFilter(q)
             }
         }
-    }
+}
 
 class SportScoutingAdapter(private var sportscoutings: List<SportScoutingModel>) :
     RecyclerView.Adapter<SportScoutingAdapter.MainHolder>() {
@@ -416,7 +403,6 @@ class SportScoutingAdapter(private var sportscoutings: List<SportScoutingModel>)
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val sportscouting = sportscoutings[holder.adapterPosition]
         holder.bind(sportscouting)
-        //holder.bind(sportscoutings[position])
     }
 
     override fun getItemCount(): Int = sportscoutings.size
@@ -427,7 +413,6 @@ class SportScoutingAdapter(private var sportscoutings: List<SportScoutingModel>)
 
         fun bind(sportscouting: SportScoutingModel) {
             binding.player.text = sportscouting.player
-            //binding.description.text = sportscouting.description
             val team = sportscouting.team.trim()
             val pos = sportscouting.position.trim()
             binding.team.text =

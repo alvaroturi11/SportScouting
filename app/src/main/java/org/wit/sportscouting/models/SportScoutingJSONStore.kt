@@ -2,7 +2,6 @@ package org.wit.sportscouting.models
 
 import android.content.Context
 import kotlinx.serialization.encodeToString
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import java.io.File
 

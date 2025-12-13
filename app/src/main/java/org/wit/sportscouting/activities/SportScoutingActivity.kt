@@ -22,7 +22,6 @@ class SportScoutingActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivitySportscoutingBinding
     var sportscouting = SportScoutingModel()
-    //val sportscoutings = ArrayList<SportScoutingModel>()
     private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
 
     lateinit var app: MainApp

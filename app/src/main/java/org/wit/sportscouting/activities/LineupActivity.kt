@@ -137,15 +137,15 @@ class LineupActivity : AppCompatActivity() {
                 }
 
                 if (drawable != null) {
-                    gap.background = drawable   // use the image as a background
+                    gap.background = drawable   // Use the image as a background
                     gap.text = ""
                 } else {
-                    // fallback: image could not be loaded → name
+                    // Fallback: image could not be loaded → name
                     gap.setBackgroundResource(R.drawable.lineup_gap_bg)
                     gap.text = player.player
                 }
             } catch (e: Exception) {
-                // if something goes wrong with the image → name
+                // If something goes wrong with the image → name
                 gap.setBackgroundResource(R.drawable.lineup_gap_bg)
                 gap.text = player.player
             }
